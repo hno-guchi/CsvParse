@@ -6,42 +6,24 @@
 #include <vector>
 
 #include "Csv.hpp"
-#include "debugMessage.hpp"
+#include "color.hpp"
 
 // CONSTRUCTOR
 Csv::Csv(const std::string& fileName, const bool isHeader) :
 	fileName_(fileName), isHeader_(isHeader), countField_(0)
 {
-#if DEBUG
-	debugMessage("Csv", HAS_ARG_CONSTRUCT);
-#endif // DEBUG
+	(void)countField_;
 	try {
 		std::ifstream	fd(this->fileName_);
 
-		if (fd.fail() || fd.eof()) {
-			throw Csv::FatalErr("Failed std::ifstream().");
-		}
 		std::string		line("");
-		while (std::getline(fd, line, '\n')) {
-			if (fd.fail()) {
-				throw Csv::FatalErr("Failed std::getline().");
-			}
+		if (this->isHeader_) {
+			std::getline(fd, line, '\n');
 			std::cout << line << std::endl;
 		}
-		if (!fd.eof() && fd.fail()) {
-			throw Csv::FatalErr("Failed std::getline().");
+		while (std::getline(fd, line, '\n')) {
+			std::cout << line << std::endl;
 		}
-		// if (this->isHeader_) {
-		// 	// this->setHeader(fd, ",");
-		// 	std::string		line("");
-
-		// 	std::getline(fd, line, '\n');
-		// 	if (fd.fail()) {
-		// 		throw Csv::FatalErr("Failed std::getline().");
-		// 	}
-		// 	this->setHeader(line, ",");
-		// }
-		// this->setRecord(fd, ",");
 		fd.close();
 	}
 	catch (const std::exception& e) {
@@ -54,27 +36,6 @@ Csv::~Csv()
 #if DEBUG
 	debugMessage("Csv", DESTRUCT);
 #endif // DEBUG
-}
-
-// GETTER
-const std::string&	Csv::getFileName() const
-{
-	return (this->fileName_);
-}
-
-size_t	Csv::getCountField() const
-{
-	return (this->countField_);
-}
-
-bool	Csv::getIsHeader() const
-{
-	return (this->isHeader_);
-}
-
-const std::vector<std::string>	Csv::getHeader() const
-{
-	return (this->header_);
 }
 
 // void	Csv::getField(std::string& field, std::string& line, const std::string& delimiter)
