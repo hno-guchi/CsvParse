@@ -1,10 +1,9 @@
 #include <iostream>
 #include <exception>
 
-#include "Csv.hpp"
+#include "./Csv.hpp"
 
-int	main()
-{
+int	main() {
 	try {
 		Csv	csv("data.csv");
 	}
