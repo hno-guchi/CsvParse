@@ -14,6 +14,9 @@ TEST(CsvTest, BasicTest) {
 
 	csv.getField(&result, &line);
 	EXPECT_EQ(result, "age");
+
+	csv.getField(&result, &line);
+	EXPECT_EQ(result, "");
 }
 
 // TEST(CsvTest, EmptyStringTest) {
