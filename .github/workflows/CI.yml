@@ -11,13 +11,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up CMake
       run: sudo apt-get -y install cmake
-      # uses: cmake/setup-cmake@v2
-      # with:
-      #   cmake-version: 3.21
 
     - name: Build
       run: |
