@@ -72,4 +72,9 @@ test_leaks: re
 test_leaks:
 	./$(NAME)
 
+.PHONY: google_test
+google_test:
+	cmake --build ./build
+	./build/CsvTest
+
 -include $(DEPENDS)
