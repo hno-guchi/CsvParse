@@ -15,7 +15,8 @@ class Csv {
 
  public:
 	 // CONSTRUCTOR
-	 explicit Csv(const std::string& fileName = "data.csv", const bool isHeader = true);
+	 explicit Csv(const std::string& fileName \
+			 = "data.csv", const bool isHeader = true);
 	 // DESTRUCTOR
 	 ~Csv();
 	 void	getField(std::string* field, std::string* line);

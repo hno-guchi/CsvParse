@@ -6,7 +6,7 @@
 /*   By: hnoguchi <hnoguchi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 17:09:31 by hnoguchi          #+#    #+#             */
-/*   Updated: 2023/10/20 17:25:17 by hnoguchi         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:18:28 by hnoguchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DEBUGMESSAGE_HPP
 
 #include <iostream>
+#include <string>
 
 typedef enum eMessageType {
 	DEFAULT_CONSTRUCT,
