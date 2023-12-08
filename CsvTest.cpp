@@ -6,21 +6,71 @@ TEST(CsvTest, BasicTest) {
 	Csv csv("./data.csv");
 
 	// 期待される結果と比較
-	std::string line("name,age");
+	std::string line("");
 	std::string result("");
 
-	csv.getField(&result, &line);
-	EXPECT_EQ(result, "name");
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 
-	csv.getField(&result, &line);
-	EXPECT_EQ(result, "age");
+	line = "field"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
-	csv.getField(&result, &line);
-	EXPECT_EQ(result, "age");
+	line = ",field"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+
+	line = "field,"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	line = "field,field"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
 	result = "";
-	csv.getField(&result, &line);
-	EXPECT_EQ(result, "");
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	line = ",field,field"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	line = "field,,field"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	line = "field,field,"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+
+	line = ",,"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+
+
 }
 
 // TEST(CsvTest, EmptyStringTest) {
