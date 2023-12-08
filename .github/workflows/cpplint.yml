@@ -1,28 +1,25 @@
-name: CI
+name: cpplint
 
 on:
-  push:
+  pull_request:
     branches:
-      - develop
+      - main
 
 jobs:
-  google_tests:
+  check_cpplint:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install cmake
-      run: sudo apt-get -y install cmake
+    - name: Install cpplint
+      run: sudo apt-get -y install cpplint
 
-    - name: Build
+    - name: Run cpplint
       run: |
-        cmake -S . -B build
-        cmake --build build
+        cpplint --filter=-build/header_guard,-legal/copyright,-whitespace/tab --recursive .
 
-    - name: Run tests
-      run: ./build/CsvTest
 
 # name: learn-github-actions
 # run-name: ${{ github.actor }} is learning GitHub Actions
