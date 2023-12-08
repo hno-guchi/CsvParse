@@ -25,7 +25,7 @@ jobs:
         cmake --build build
 
     - name: Run tests
-      run: ./build/test/your_test_executable
+      run: ./build/CsvTest
 
 # name: learn-github-actions
 # run-name: ${{ github.actor }} is learning GitHub Actions
