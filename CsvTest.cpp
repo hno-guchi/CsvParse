@@ -11,46 +11,46 @@ TEST(CsvTest, BasicTest) {
 
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 
-	line = "field"
+	line = "field";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
-	line = ",field"
+	line = ",field";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 
-	line = "field,"
+	line = "field,";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
-	line = "field,field"
-	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
-	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
-	line = ",field,field"
-	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-
+	line = "field,field";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
-	line = "field,,field"
-	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
+	line = ",field,field";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
-	line = "field,field,"
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	line = "field,,field";
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+
+	result = "";
+	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+
+	line = "field,field,";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
@@ -60,7 +60,7 @@ TEST(CsvTest, BasicTest) {
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 
-	line = ",,"
+	line = ",,";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 
@@ -69,8 +69,6 @@ TEST(CsvTest, BasicTest) {
 
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-
-
 }
 
 // TEST(CsvTest, EmptyStringTest) {
