@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up CMake
+      run: sudo apt-get -y install cmake
+
+    - name: Build
+      run: |
+        cmake -S . -B build
+        cmake --build build
+
+    - name: Run tests
+      run: ./build/CsvTest
+
+# name: learn-github-actions
+# run-name: ${{ github.actor }} is learning GitHub Actions
+# on: [push]
+# jobs:
+#   check-bats-version:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: '14'
+#       - run: npm install -g bats
+#       - run: bats -v
