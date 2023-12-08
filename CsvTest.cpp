@@ -3,12 +3,12 @@
 
 TEST(CsvTest, BasicTest) {
 	// テスト対象の関数を呼び出す
-	Csv csv("./data.csv");
+	Csv csv("./sample.csv");
 
-	// 期待される結果と比較
 	std::string line("");
 	std::string result("");
 
+	// 期待される結果と比較
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 
 	line = "field";
@@ -19,56 +19,50 @@ TEST(CsvTest, BasicTest) {
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 
-	line = "field,";
-	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
 	line = "field,field";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
 	line = ",field,field";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
 
 	line = "field,,field";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+}
+
+TEST(CsvTest, ExceptionTest) {
+	// テスト対象の関数を呼び出す
+	Csv csv("./sample.csv");
+
+	std::string	line("field,");
+	std::string	result("");
+
+    // 期待される結果と比較
+	EXPECT_THROW(csv.getField(&result, &line), Csv::ValidErr);
 
 	line = "field,field,";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
 	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-
-	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+	EXPECT_THROW(csv.getField(&result, &line), Csv::ValidErr);
 
 	line = ",,";
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-
 	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-
-	result = "";
-	csv.getField(&result, &line);	EXPECT_EQ(result, "");
+	EXPECT_THROW(csv.getField(&result, &line), Csv::ValidErr);
 }
 
 // TEST(CsvTest, EmptyStringTest) {
@@ -79,7 +73,7 @@ TEST(CsvTest, BasicTest) {
 //     // 期待される結果と比較
 //     ASSERT_EQ(result.size(), 0);
 // }
-//
+
 // TEST(SplitStringTest, MultipleSpacesTest) {
 //     // テスト対象の関数を呼び出す
 //     std::string input = "   This   is    a   test   ";
