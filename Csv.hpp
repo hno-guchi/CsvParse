@@ -11,7 +11,7 @@ class Csv {
 	 const bool								isHeader_;
 	 size_t									countField_;
 	 std::vector<std::string>				header_;
-	 std::list<std::vector<std::string> >	record_;
+	 std::list<std::vector<std::string> >	records_;
 
  public:
 	 // CONSTRUCTOR
@@ -20,6 +20,7 @@ class Csv {
 	 // DESTRUCTOR
 	 ~Csv();
 	 void	getField(std::string* field, std::string* line);
+	 void	setRecord(std::string* line);
 // EXCEPTION
 class FatalErr : public std::logic_error {
  public:
