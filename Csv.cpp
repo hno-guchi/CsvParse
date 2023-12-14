@@ -10,33 +10,30 @@
 
 // CONSTRUCTOR
 Csv::Csv(const std::string& fileName, const bool isHeader) :
-	fileName_(fileName), isHeader_(isHeader), countField_(0) {
-	(void)countField_;
-	try {
-		std::ifstream	fd(this->fileName_);
+	fileName_(fileName), isHeader_(isHeader) {
+	std::ifstream	fd(this->fileName_);
 
+	try {
 		if (fd.eof() || fd.fail()) {
-			fd.close();
 			throw Csv::FatalErr("Failed std::getline().");
 		}
 		std::string		line("");
-		if (this->isHeader_) {
-			std::getline(fd, line, '\n');
-			// std::cout << line << std::endl;
-		}
 		while (std::getline(fd, line, '\n')) {
 			this->setRecord(&line);
-			// std::cout << line << std::endl;
 		}
 		if (!fd.eof() && fd.fail()) {
-			fd.close();
 			throw Csv::FatalErr("Failed std::getline().");
 		}
-		fd.close();
+		if (this->isHeader_) {
+			this->setHeader();
+		}
+		this->checkCountField();
 	}
 	catch (const std::exception& e) {
+		fd.close();
 		throw;
 	}
+	fd.close();
 }
 
 Csv::~Csv() {
@@ -64,31 +61,11 @@ void Csv::getField(std::string* field, std::string* line) {
 	}
 }
 
-// void	Csv::setHeader(std::string line, const std::string& delimiter)
-// {
-// 	try {
-// 		size_t		i(0);
-// 		std::string	field("");
-//
-// 		while (!line.empty()) {
-// 			getField(field, line, delimiter);
-// 			this->header_[i] = field;
-// 			i += 1;
-// 		}
-// 		this->countField_ = i;
-// 	}
-// 	catch (const std::exception& e) {
-// 		throw ;
-// 	}
-// }
-
 void	Csv::setRecord(std::string* line) {
 	if (line->empty()) {
 		return;
 	}
 	if (line->rfind(",") == (line->size() - 1)) {
-		// std::cerr << "Invalid csv format." << std::endl;
-		// return;
 		throw Csv::ValidErr("Invalid csv format.");
 	}
 	try {
@@ -106,19 +83,47 @@ void	Csv::setRecord(std::string* line) {
 	}
 }
 
+void	Csv::setHeader() {
+	try {
+		this->header_ = this->records_.front();
+		this->records_.pop_front();
+	}
+	catch (const std::exception& e) {
+		throw;
+	}
+}
+
+void	Csv::checkCountField() {
+	size_t countField(0);
+
+	if (this->isHeader_) {
+		countField = this->header_.size();
+	} else {
+		countField = this->records_.front().size();
+	}
+	for (std::list<std::vector<std::string> >::const_iterator itr = \
+	this->records_.begin(); itr != this->records_.end(); itr++) {
+		if (countField != itr->size()) {
+			throw Csv::ValidErr("Invalid csv format.");
+		}
+	}
+}
+
 // EXCEPTION
 Csv::FatalErr::FatalErr(const std::string& msg) : std::logic_error(msg) {}
 Csv::ValidErr::ValidErr(const std::string& msg) : std::logic_error(msg) {}
 
-// void	Csv::debugPrint() const
-// {
-// 	for (std::list<std::vector<std::string> >::const_iterator itr = \
-// 	this->recordKeyString_.begin(); itr != this->recordKeyString_.end(); \
-// 	itr++) {
-// 		for (std::vector<std::string>::const_iterator itr2 = (*itr).begin(); \
-// 		itr2 != (*itr).end(); itr2++) {
-// 			std::cout << itr2->first << ": " << itr2->second << std::endl;
-// 		}
-// 		std::cout << std::endl;
-// 	}
-// }
+void	Csv::debugPrint() const {
+	for (std::list<std::vector<std::string> >::const_iterator itr = \
+	this->records_.begin(); itr != this->records_.end(); \
+	itr++) {
+		for (std::vector<std::string>::const_iterator itr2 = (*itr).begin(); \
+		itr2 != (*itr).end(); itr2++) {
+			std::cout << *itr2 << std::flush;
+			if (itr2 + 1 != (*itr).end()) {
+				std::cout << ",";
+			}
+		}
+		std::cout << std::endl;
+	}
+}

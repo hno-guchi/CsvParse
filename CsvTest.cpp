@@ -1,49 +1,7 @@
 #include <gtest/gtest.h>
 #include "./Csv.hpp"
 
-// TEST(CsvTest, setRecordBasicTest) {
-// 	// テスト対象の関数を呼び出す
-// 	Csv			csv("./sample.csv");
-// 	std::string	line("");
-//
-// 	// 期待される結果と比較
-// 	csv.setRecord(&line);
-// 	EXPECT_EQ(result, "");
-//
-// 	line = "field";
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-//
-// 	line = "field,field";
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-//
-// 	line = ",field";
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-//
-// 	line = ",field,field";
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-//
-// 	line = "field,,field";
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
-// 	result = "";
-// 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
-// }
-
-TEST(CsvTest, getFieldBasicTest) {
+TEST(CsvTest, getFieldTest) {
 	// テスト対象の関数を呼び出す
 	Csv			csv("./sample.csv");
 	std::string	line("");
@@ -83,6 +41,25 @@ TEST(CsvTest, getFieldBasicTest) {
 	csv.getField(&result, &line);	EXPECT_EQ(result, "");
 	result = "";
 	csv.getField(&result, &line);	EXPECT_EQ(result, "field");
+}
+
+TEST(CsvTest, setRecordTest) {
+	// テスト対象の関数を呼び出す
+	Csv			csv("./sample.csv");
+	std::string	line("");
+
+	// 期待される結果と比較
+	line = ",";
+	EXPECT_THROW(csv.setRecord(&line), Csv::ValidErr);
+
+	line = ",,";
+	EXPECT_THROW(csv.setRecord(&line), Csv::ValidErr);
+
+	line = "field,field,";
+	EXPECT_THROW(csv.setRecord(&line), Csv::ValidErr);
+
+	line = "";
+	EXPECT_NO_THROW(csv.setRecord(&line));
 }
 
 // TEST(CsvTest, ExceptionTest) {

@@ -9,7 +9,6 @@ class Csv {
  private:
 	 const std::string						fileName_;
 	 const bool								isHeader_;
-	 size_t									countField_;
 	 std::vector<std::string>				header_;
 	 std::list<std::vector<std::string> >	records_;
 
@@ -21,6 +20,9 @@ class Csv {
 	 ~Csv();
 	 void	getField(std::string* field, std::string* line);
 	 void	setRecord(std::string* line);
+	 void	setHeader();
+	 void	checkCountField();
+	 void	debugPrint() const;
 // EXCEPTION
 class FatalErr : public std::logic_error {
  public:
