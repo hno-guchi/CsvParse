@@ -12,6 +12,7 @@ FetchContent_Declare(
 
 # Windows環境で共有ランタイムを使用するための設定
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+# set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 
 # Google Testをプロジェクトに組み込む
 FetchContent_MakeAvailable(googletest)
