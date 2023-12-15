@@ -7,30 +7,26 @@
 
 class Csv {
  private:
-	 const std::string						fileName_;
-	 const bool								isHeader_;
-	 std::vector<std::string>				header_;
-	 std::list<std::vector<std::string> >	records_;
+	const std::string						fileName_;
+	const bool								isHeader_;
+	std::vector<std::string>				header_;
+	std::list<std::vector<std::string> >	records_;
 
  public:
-	 // CONSTRUCTOR
-	 explicit Csv(const std::string& fileName \
-			 = "data.csv", const bool isHeader = true);
-	 // DESTRUCTOR
-	 ~Csv();
-	 void	getField(std::string* field, std::string* line);
-	 void	setRecord(std::string* line);
-	 void	setHeader();
-	 void	checkCountField();
-	 void	debugPrint() const;
+	// CONSTRUCTOR
+	explicit Csv(const std::string& fileName \
+			= "data.csv", const bool isHeader = true);
+	// DESTRUCTOR
+	~Csv();
+	void	debugPrint() const;
 // EXCEPTION
 class FatalErr : public std::logic_error {
  public:
-	 explicit FatalErr(const std::string& msg = "Fatal error.");
+	explicit FatalErr(const std::string& msg = "Fatal error.");
 };
 class ValidErr : public std::logic_error {
  public:
-	 explicit ValidErr(const std::string& msg = "Validation error.");
+	explicit ValidErr(const std::string& msg = "Validation error.");
 };
 };
 
